@@ -1,0 +1,83 @@
+#include <LiquidCrystal.h>   // Carrega a biblioteca LiquidCrystal
+
+// Definição dos pinos
+const int infrazero = 8;     // Pino do sensor infravermelho
+const int buttonPin = 21;    // Pino do botão 1
+const int buttonPin1 = 3;    // Pino do botão 2
+const int buttonPin2 = 2;    // Pino do botão 3
+int contador = 0;            // Contador inicial
+unsigned long lastDebounceTime = 0;  // Tempo da última leitura do botão
+unsigned long debounceDelay = 50;    // Delay de debounce em milissegundos
+
+LiquidCrystal lcd(12, 11, 7, 6, 5, 4); // Pinos do display LCD
+
+void setup() {
+  
+  cli();
+  pinMode(infrazero, INPUT); // Sensor infravermelho como entrada
+  pinMode(13, OUTPUT);       // Configura o pino 13 como saída para 5V
+  pinMode(buttonPin, INPUT_PULLUP);
+  pinMode(buttonPin1, INPUT_PULLUP);
+  pinMode(buttonPin2, INPUT_PULLUP); // Configura os pinos dos botões como entrada com pull-up interno
+
+  // Inicializa a porta serial
+  Serial.begin(115200);
+
+  // Configuração de interrupções para os botões
+  attachInterrupt(digitalPinToInterrupt(buttonPin), buttonPressed, FALLING);
+  attachInterrupt(digitalPinToInterrupt(buttonPin1), buttonPressed, FALLING);
+  attachInterrupt(digitalPinToInterrupt(buttonPin2), buttonPressed, FALLING);
+  attachInterrupt(digitalPinToInterrupt(18), SomaContador, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(19), SomaContador, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(20), SomaContador, CHANGE);
+
+  // Configuração do LCD
+  lcd.begin(16, 2);  // Inicializa o LCD com 16 colunas e 2 linhas
+  lcd.clear();       
+  lcd.setCursor(0, 0);
+  lcd.print("Contador:");
+  lcd.setCursor(0, 1);
+  lcd.print(contador);
+  
+  sei();
+}
+ 
+
+
+void loop() {
+  int estado = digitalRead(infrazero); // Lê o estado do sensor infravermelho
+
+  // Se o sensor infravermelho for ativado, zera o contador
+  if (estado == 1) {
+    contador = 0;
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Contador:");
+    lcd.setCursor(0, 1);
+    lcd.print(contador);
+    Serial.println(estado);
+  }
+
+  // Escreve o estado do sensor infravermelho na porta serial
+  Serial.println(estado);
+  delay(500); // Pequeno delay para evitar múltiplas leituras rápidas
+}
+
+void buttonPressed() {
+  // Implementa o debounce
+  unsigned long currentTime = millis();
+  if ((currentTime - lastDebounceTime) > debounceDelay) {
+    SomaContador();
+    lastDebounceTime = currentTime;
+  }
+}
+
+void SomaContador() {
+  contador = contador + 10;  // Incrementa o contador
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Contador:");
+  lcd.setCursor(0, 1);
+  lcd.print(contador);
+  Serial.print(contador);
+}
