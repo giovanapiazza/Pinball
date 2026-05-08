@@ -2,7 +2,7 @@
 
 Este repositório contém o código-fonte para um sistema de controle de uma máquina de Pinball desenvolvida com Arduino. O projeto foi elaborado como uma iniciativa voluntária para explorar conceitos de sistemas embarcados, eletrónica e lógica de programação.
 
-## 🕹️ Funcionalidades
+## Funcionalidades
 
 - **Contagem de Pontos:** Sistema de pontuação acumulativa (incrementos de 10 pontos).
 - **Interface em Tempo Real:** Exibição da pontuação atual num LCD 16x2.
@@ -10,7 +10,7 @@ Este repositório contém o código-fonte para um sistema de controle de uma má
 - **Sensor de Reset:** Sensor infravermelho posicionado na base para detetar o fim da jogada e reiniciar o contador.
 - **Debounce:** Tratamento via software para evitar leituras falsas causadas pelo ruído mecânico dos botões.
 
-## 🛠️ Hardware Necessário
+## Hardware Necessário
 
 - **Microcontrolador:** Arduino (ex: Uno, Mega ou Nano).
 - **Display:** LCD 16x2 (Compatível com Hitachi HD44780).
@@ -18,7 +18,7 @@ Este repositório contém o código-fonte para um sistema de controle de uma má
   - 1x Sensor Infravermelho (Deteção de queda da bola).
 - **Comunicação:** Serial configurada para 115200 baud.
 
-## 📌 Pinagem Utilizada
+## Pinagem Utilizada
 
 | Componente | Pino Arduino | Função |
 | :--- | :--- | :--- |
@@ -30,7 +30,7 @@ Este repositório contém o código-fonte para um sistema de controle de uma má
 | **Botão 2** | 3 | Alvo 2 (Interrupção) |
 | **Botão 3** | 2 | Alvo 3 (Interrupção) |
 
-## 🚀 Como Executar
+## Como Executar
 
 1.  Clone este repositório ou copie o código para a sua IDE Arduino.
 2.  Certifique-se de que a biblioteca `LiquidCrystal.h` está instalada (incluída por padrão na IDE).
@@ -38,7 +38,7 @@ Este repositório contém o código-fonte para um sistema de controle de uma má
 4.  Faça o upload do código para o seu microcontrolador.
 5.  Abra o **Serial Monitor** com o baud rate em `115200` para acompanhar os logs do sistema.
 
-## 💻 Estrutura do Código
+## Estrutura do Código
 
 O software utiliza um modelo baseado em interrupções para máxima precisão:
 - `setup()`: Configura os pinos, inicializa o LCD e define as interrupções externas.
